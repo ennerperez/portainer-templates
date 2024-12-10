@@ -1,0 +1,66 @@
+name: services
+services:
+  speedtest:
+    container_name: speedtest
+    image: openspeedtest/latest:latest
+    restart: unless-stopped
+    environment:
+      - CHANGE_CONTAINER_PORTS=True
+      - HTTP_PORT=8080
+      - HTTPS_PORT=8081
+    ports:
+      - "8010:8080/tcp"
+      - "8011:8081/tcp"
+    healthcheck:
+      test: wget --no-verbose --tries=3 --spider http://127.0.0.1:8080 || exit 1
+      start_period: 5s
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
+      - shared
+  metube:
+    container_name: metube
+    image: ghcr.io/alexta69/metube:latest
+    restart: unless-stopped
+    environment:
+      - HTTPS=false
+      - USER_ACCOUNT=${ACCOUNT}
+    ports:
+      - "8020:8081/tcp"
+    healthcheck:
+      test: wget --no-verbose --tries=3 --spider http://127.0.0.1:8081 || exit 1
+      start_period: 5s
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
+      - shared
+    volumes:
+      - ${HOMEDIR}/Downloads/Videos:/downloads
+  podgrab:
+    container_name: podgrab
+    image: akhilrex/podgrab:latest
+    restart: unless-stopped
+    environment:
+      - USER_ACCOUNT=${ACCOUNT}
+      - CHECK_FREQUENCY=240
+    ports:
+      - "8030:8080/tcp"
+    healthcheck:
+      test: wget --no-verbose --tries=3 --spider http://127.0.0.1:8080 || exit 1
+      start_period: 5s
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
+      - shared
+    volumes:
+      - /usr/local/.containers/volumes/podgrab/config:/config
+      - ${HOMEDIR}/Podcasts:/assets
+networks:
+  shared:
+    external: true

@@ -1,0 +1,41 @@
+name: minecraft
+services:
+  minecraft:
+    container_name: minecraft
+    image: itzg/minecraft-server
+    volumes:
+      - /usr/local/.containers/volumes/minecraft/instance:/data
+    restart: unless-stopped
+    environment:
+      - EULA=TRUE
+      - TYPE=${TYPE}
+      - VERSION=${VERSION}
+      - FABRIC_VERSION=${FABRIC_VERSION}
+      - MEMORY=4G
+      - MAX_MEMORY=10G
+    ports:
+      - "25565:25565/tcp"
+      - "25575:25575/tcp"
+      - "8123:8123/tcp"
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 10G
+    networks:
+      - default
+      - shared
+  playit:
+    container_name: playit
+    image: ghcr.io/mafen/playit-docker:latest
+    restart: unless-stopped
+    depends_on:
+      - server
+    volumes:
+      - /usr/local/.containers/volumes/minecraft/instance/playit.toml:/etc/playit/playit.toml
+    networks:
+      - default
+      - shared
+networks:
+  shared:
+    external: true

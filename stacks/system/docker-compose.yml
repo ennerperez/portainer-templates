@@ -1,0 +1,85 @@
+name: system
+services:
+  datadog:
+    container_name: datadog
+    image: datadog/agent:latest
+    restart: always
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    environment:
+      - DD_SITE=datadoghq.com
+      - DD_LOGS_ENABLED=true
+      #- DD_HOSTNAME=${HOSTNAME}
+      - DD_API_KEY=${DD_API_KEY}
+    networks:
+      - default
+      - shared
+  socat:
+    container_name: socat
+    image: alpine/socat:latest
+    restart: always
+    command: "tcp-listen:2375,fork,reuseaddr,ignoreeof unix-connect:/var/run/docker.sock"
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    ports:
+      - "2376:2375/tcp"
+    healthcheck:
+      test: timeout 10 nc -z -v 127.0.0.1 2375 || exit 1
+      start_period: 5s
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
+      - shared
+  proxy:
+    container_name: proxy
+    image: jc21/nginx-proxy-manager:latest
+    restart: always
+    privileged: true
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "81:81/tcp"
+      #- "21:21/tcp"
+    healthcheck:
+      test: [ "CMD", "/usr/bin/check-health" ]
+      start_period: 5s
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - /usr/local/.containers/volumes/system/proxy/data:/data
+      - /usr/local/.containers/volumes/system/proxy/letsencrypt:/etc/letsencrypt
+    environment:
+      - TZ=America/Guayaquil
+      - PUID=1000
+      - PGID=1000
+    networks:
+      - default
+      - shared
+  cloudflared:
+    container_name: cloudflared
+    image: cloudflare/cloudflared:latest
+    restart: always
+    privileged: true
+    command: ["tunnel", "--no-autoupdate", "--metrics", "0.0.0.0:3333", "run", "--token", "${CF_TOKEN}"]
+    #    healthcheck:
+    #      test: curl --fail http://0.0.0.0:3333/ready
+    #      start_period: 5s
+    #      interval: 60s
+    #      timeout: 10s
+    #      retries: 5
+    networks:
+      - default
+      - shared
+networks:
+  shared:
+    external: true
