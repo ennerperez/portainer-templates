@@ -20,6 +20,10 @@
           "label": "Datadog API key"
         },
         {
+          "name": "DD_HOSTNAME",
+          "label": "Datadog Hostname"
+        },
+        {
           "name": "CF_TOKEN",
           "label": "Cloudflare Token"
         }

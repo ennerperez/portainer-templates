@@ -13,7 +13,7 @@ services:
     environment:
       - DD_SITE=datadoghq.com
       - DD_LOGS_ENABLED=true
-      #- DD_HOSTNAME=${HOSTNAME}
+      - DD_HOSTNAME=${DD_HOSTNAME}
       - DD_API_KEY=${DD_API_KEY}
     networks:
       - default
