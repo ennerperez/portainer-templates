@@ -39,7 +39,7 @@ services:
       - default
       - shared
     volumes:
-      - ${HOMEDIR}/Downloads/Videos:/downloads
+      - ${HOMEDIR}/Videos:/downloads
   podgrab:
     container_name: podgrab
     image: akhilrex/podgrab:latest
@@ -59,7 +59,7 @@ services:
       - default
       - shared
     volumes:
-      - /usr/local/.containers/volumes/podgrab/config:/config
+      - /usr/local/containers/volumes/podgrab/config:/config
       - ${HOMEDIR}/Podcasts:/assets
 networks:
   shared:
