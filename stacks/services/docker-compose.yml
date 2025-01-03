@@ -59,7 +59,7 @@ services:
       - default
       - shared
     volumes:
-      - /usr/local/containers/volumes/podgrab/config:/config
+      - /usr/local/containers/volumes/services/podgrab/config:/config
       - ${HOMEDIR}/Podcasts:/assets
 networks:
   shared:
