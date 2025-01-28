@@ -1,6 +1,6 @@
-name: budget
+name: management
 services:
-  server:
+  budget:
     image: docker.io/actualbudget/actual-server:latest
     ports:
       - '5006:5006/tcp'
@@ -17,7 +17,7 @@ services:
     volumes:
       # Change './actual-data' below to the path to the folder you want Actual to store its data in on your server.
       # '/data' is the path Actual will look for its files in by default, so leave that as-is.
-      - /usr/local/containers/volumes/budget/data:/data
+      - /usr/local/containers/volumes/management/budget/data:/data
     healthcheck:
       test: ["CMD-SHELL", "node src/scripts/health-check.js"]
       interval: 60s
