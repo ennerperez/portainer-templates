@@ -247,6 +247,21 @@
           "container": "/config"
         }
       ]
+    },
+    {
+      "id": 8,
+      "type": 3,
+      "title": "budget",
+      "description": "Actual Budget",
+      "categories": [
+        "Platform"
+      ],
+      "platform": "linux",
+      "logo": "https://avatars.githubusercontent.com/u/37879538?s=48&v=4",
+      "repository": {
+        "url": "https://github.com/ennerperez/portainer-templates",
+        "stackfile": "stacks/budget/docker-compose.yml"
+      }
     }
   ]
 }
