@@ -1,6 +1,6 @@
 name: ghost
 services:
-  personal:
+  ghost:
     image: ghost:5-alpine
     restart: always
     ports:
@@ -17,7 +17,7 @@ services:
       # contrary to the default mentioned in the linked documentation, this image defaults to NODE_ENV=production (so development mode needs to be explicitly specified if desired)
       NODE_ENV: ${SITE_ENV}
     volumes:
-      - usr/local/containers/volumes/sites/${SITE_NAME}/content:/var/lib/ghost/content
+      - /usr/local/containers/volumes/sites/${SITE_NAME}/content:/var/lib/ghost/content
     networks:
       - default
       - shared
@@ -27,7 +27,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - usr/local/containers/volumes/sites/${SITE_NAME}/database:/var/lib/mysql
+      - /usr/local/containers/volumes/sites/${SITE_NAME}/database:/var/lib/mysql
     networks:
       - default
 networks:
