@@ -261,6 +261,34 @@
         "url": "https://github.com/ennerperez/portainer-templates",
         "stackfile": "stacks/management/docker-compose.yml"
       }
+    },
+    {
+      "id": 9,
+      "type": 3,
+      "title": "Ghost",
+      "description": "Ghost Site",
+      "categories": [
+        "Web"
+      ],
+      "platform": "linux",
+      "repository": {
+        "url": "https://github.com/ennerperez/portainer-templates",
+        "stackfile": "stacks/ghost/docker-compose.yml"
+      },
+      "env": [
+        {
+          "name": "DB_PASSWORD",
+          "label": "Database Password"
+        },
+        {
+          "name": "SITE_NAME",
+          "label": "Site Name"
+        },
+        {
+          "name": "SITE_PORT",
+          "label": "Site Port"
+        }
+      ]
     }
   ]
 }
