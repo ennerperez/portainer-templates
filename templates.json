@@ -287,6 +287,11 @@
         {
           "name": "SITE_PORT",
           "label": "Site Port"
+        },
+        {
+          "name": "SITE_ENV",
+          "label": "Site Environment",
+          "default": "production"
         }
       ]
     }
