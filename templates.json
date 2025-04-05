@@ -1,316 +1,316 @@
 {
-  "version": "3",
-  "templates": [
-    {
-      "id": 1,
-      "type": 3,
-      "title": "System",
-      "description": "Base System",
-      "categories": [
-        "Platform"
-      ],
-      "platform": "linux",
-      "repository": {
-        "url": "https://github.com/ennerperez/portainer-templates",
-        "stackfile": "stacks/system/docker-compose.yml"
-      },
-      "env": [
+    "version": "3",
+    "templates": [
         {
-          "name": "DD_API_KEY",
-          "label": "Datadog API key"
+            "id": 1,
+            "type": 3,
+            "title": "System",
+            "description": "Base System",
+            "categories": [
+                "Platform"
+            ],
+            "platform": "linux",
+            "repository": {
+                "url": "https://github.com/ennerperez/portainer-templates",
+                "stackfile": "stacks/system/docker-compose.yml"
+            },
+            "env": [
+                {
+                    "name": "DD_API_KEY",
+                    "label": "Datadog API key"
+                },
+                {
+                  "name": "DD_HOSTNAME",
+                  "label": "Datadog Hostname"
+                },
+                {
+                  "name": "CF_TOKEN",
+                  "label": "Cloudflare Token"
+                }
+            ]
         },
         {
-          "name": "DD_HOSTNAME",
-          "label": "Datadog Hostname"
+          "id": 2,
+          "type": 3,
+          "title": "Services",
+          "description": "Base Services",
+          "categories": [
+            "Platform"
+          ],
+          "platform": "linux",
+          "repository": {
+            "url": "https://github.com/ennerperez/portainer-templates",
+            "stackfile": "stacks/services/docker-compose.yml"
+          },
+          "env": [
+            {
+              "name": "HOMEDIR",
+              "label": "Home Directory"
+            },
+            {
+              "name": "ACCOUNT",
+              "label": "User Account Name"
+            }
+          ]
         },
         {
-          "name": "CF_TOKEN",
-          "label": "Cloudflare Token"
+          "id": 3,
+          "type": 3,
+          "title": "Minecraft",
+          "description": "Minecraft Server",
+          "categories": [
+            "Gaming"
+          ],
+          "platform": "linux",
+          "logo": "https://www.minecraft.net/etc.clientlibs/minecraftnet/clientlibs/clientlib-site/resources/android-icon-192x192.png",
+          "repository": {
+            "url": "https://github.com/ennerperez/portainer-templates",
+            "stackfile": "stacks/minecraft/docker-compose.yml"
+          },
+          "env": [
+            {
+              "name": "TYPE",
+              "label": "Server Type",
+              "default": "FABRIC"
+            },
+            {
+              "name": "VERSION",
+              "label": "Minecraft Version",
+              "default": "1.20.1"
+            },
+            {
+              "name": "FABRIC_VERSION",
+              "label": "Fabric Version",
+              "default": "0.15.3"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "type": 1,
+          "title": "Plex",
+          "description": "Plex Media Server",
+          "categories": [
+            "Media"
+          ],
+          "platform": "linux",
+          "logo": "https://www.plex.tv/wp-content/themes/plex/assets/img/favicons/plex-192.png",
+          "image": "plexinc/pms-docker",
+          "env": [
+            {
+              "name": "TZ",
+              "label": "Timezone",
+              "default": "America/Guayaquil"
+            },
+            {
+              "name": "PLEX_CLAIM",
+              "label": "Plex Claim",
+              "default": "claim-xxxxx"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "plex-config",
+              "label": "Config Volume",
+              "host": "/usr/local/.containers/volumes/plex/config",
+              "container": "/config"
+            },
+            {
+              "name": "plex-transcode",
+              "label": "Transcode Volume",
+              "host": "/usr/local/.containers/volumes/plex/transcode",
+              "container": "/transcode"
+            },
+            {
+              "name": "plex-data",
+              "label": "Data Volume",
+              "host": "/usr/local/.containers/volumes/plex/data",
+              "container": "/data"
+            }
+          ],
+          "ports": [
+            "32400:32400/tcp",
+            "3005:3005/tcp",
+            "8324:8324/tcp",
+            "32469:32469/tcp",
+            "1900:1900/udp",
+            "32410:32410/udp",
+            "32412:32412/udp",
+            "32413:32413/udp",
+            "32414:32414/udp"
+          ]
+        },
+        {
+          "id": 5,
+          "type": 1,
+          "title": "MSSQL",
+          "description": "Microsoft SQL Server",
+          "categories": [
+            "Database"
+          ],
+          "platform": "linux",
+          "logo": "https://www.gravatar.com/avatar/7d3b0469b6f73dd41ed7de7931e44510?s=120&r=g&d=404",
+          "image": "mcr.microsoft.com/azure-sql-edge",
+          "env": [
+            {
+              "name": "ACCEPT_EULA",
+              "label": "Accept EULA",
+              "default": "Y"
+            },
+            {
+              "name": "MSSQL_SA_PASSWORD",
+              "label": "SA Password",
+              "default": "Kb971033!"
+            },
+            {
+              "name": "MSSQL_PID",
+              "label": "Product ID",
+              "default": "Developer"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "mssql-data",
+              "label": "Data Volume",
+              "host": "/usr/local/.containers/volumes/mssql/data",
+              "container": "/var/opt/mssql/data"
+            },
+            {
+              "name": "mssql-log",
+              "label": "Log Volume",
+              "host": "/usr/local/.containers/volumes/mssql/log",
+              "container": "/var/opt/mssql/log"
+            },
+            {
+              "name": "mssql-secrets",
+              "label": "Secrets Volume",
+              "host": "/usr/local/.containers/volumes/mssql/secrets",
+              "container": "/var/opt/mssql/secrets"
+            }
+          ],
+          "ports": [
+            "1433:1433/tcp"
+          ],
+          "restart": "unless-stopped",
+          "privileged": true
+        },
+        {
+          "id": 6,
+          "type": 1,
+          "title": "Azurite",
+          "description": "Azure Storage Emulator",
+          "categories": [
+            "Storage"
+          ],
+          "platform": "linux",
+          "logo": "https://www.gravatar.com/avatar/7d3b0469b6f73dd41ed7de7931e44510?s=120&r=g&d=404",
+          "image": "mcr.microsoft.com/azure-storage/azurite",
+          "command": "azurite --loose --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --tableHost 0.0.0.0 --tablePort 10002 --location /workspace --debug /workspace/debug.log",
+          "volumes": [
+            {
+              "name": "azurite-workspace",
+              "label": "Workspace Volume",
+              "host": "/usr/local/.containers/volumes/azurite/workspace",
+              "container": "/workspace"
+            }
+          ],
+          "ports": [
+            "10000:10000/tcp",
+            "10001:10001/tcp",
+            "10002:10002/tcp"
+          ],
+          "restart": "unless-stopped",
+          "privileged": true
+        },
+        {
+          "id": 7,
+          "type": 1,
+          "title": "LowKey",
+          "description": "LowKey Vault",
+          "categories": [
+            "Security"
+          ],
+          "platform": "linux",
+          "logo": "https://avatars.githubusercontent.com/u/308406?s=48&v=4",
+          "image": "nagyesta/lowkey-vault:2.5.81",
+          "volumes": [
+            {
+              "name": "lowkey-import",
+              "label": "Import Volume",
+              "host": "/usr/local/.containers/volumes/lowkey/import",
+              "container": "/import"
+            },
+            {
+              "name": "lowkey-config",
+              "label": "Config Volume",
+              "host": "/usr/local/.containers/volumes/lowkey/config",
+              "container": "/config"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "type": 3,
+          "title": "Management",
+          "description": "Base Management",
+          "categories": [
+            "Platform"
+          ],
+          "platform": "linux",
+          "repository": {
+            "url": "https://github.com/ennerperez/portainer-templates",
+            "stackfile": "stacks/management/docker-compose.yml"
+          }
+        },
+        {
+          "id": 9,
+          "type": 3,
+          "title": "Ghost",
+          "description": "Ghost Site",
+          "categories": [
+            "Blog"
+          ],
+          "platform": "linux",
+          "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/ghost.png",
+          "repository": {
+            "url": "https://github.com/ennerperez/portainer-templates",
+            "stackfile": "stacks/ghost/docker-compose.yml"
+          },
+          "env": [
+            {
+              "name": "DB_PASSWORD",
+              "label": "Database Password"
+            },
+            {
+              "name": "SITE_NAME",
+              "label": "Site Name"
+            },
+            {
+              "name": "SITE_PORT",
+              "label": "Site Port"
+            },
+            {
+              "name": "SITE_ENV",
+              "label": "Site Environment",
+              "default": "production"
+            },
+            {
+              "name": "SITE_URL",
+              "label": "Site URL"
+            },
+            {
+              "name": "MAILGUN_USERNAME",
+              "label": "Mailgun Username"
+            },
+            {
+              "name": "MAILGUN_PASSWORD",
+              "label": "Mailgun Password"
+            },
+            {
+              "name": "MAILGUN_FROM",
+              "label": "Mailgun From"
+            }
+          ]
         }
-      ]
-    },
-    {
-      "id": 2,
-      "type": 3,
-      "title": "Services",
-      "description": "Base Services",
-      "categories": [
-        "Platform"
-      ],
-      "platform": "linux",
-      "repository": {
-        "url": "https://github.com/ennerperez/portainer-templates",
-        "stackfile": "stacks/services/docker-compose.yml"
-      },
-      "env": [
-        {
-          "name": "HOMEDIR",
-          "label": "Home Directory"
-        },
-        {
-          "name": "ACCOUNT",
-          "label": "User Account Name"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "type": 3,
-      "title": "Minecraft",
-      "description": "Minecraft Server",
-      "categories": [
-        "Gaming"
-      ],
-      "platform": "linux",
-      "logo": "https://www.minecraft.net/etc.clientlibs/minecraftnet/clientlibs/clientlib-site/resources/android-icon-192x192.png",
-      "repository": {
-        "url": "https://github.com/ennerperez/portainer-templates",
-        "stackfile": "stacks/minecraft/docker-compose.yml"
-      },
-      "env": [
-        {
-          "name": "TYPE",
-          "label": "Server Type",
-          "default": "FABRIC"
-        },
-        {
-          "name": "VERSION",
-          "label": "Minecraft Version",
-          "default": "1.20.1"
-        },
-        {
-          "name": "FABRIC_VERSION",
-          "label": "Fabric Version",
-          "default": "0.15.3"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "type": 1,
-      "title": "Plex",
-      "description": "Plex Media Server",
-      "categories": [
-        "Media"
-      ],
-      "platform": "linux",
-      "logo": "https://www.plex.tv/wp-content/themes/plex/assets/img/favicons/plex-192.png",
-      "image": "plexinc/pms-docker",
-      "env": [
-        {
-          "name": "TZ",
-          "label": "Timezone",
-          "default": "America/Guayaquil"
-        },
-        {
-          "name": "PLEX_CLAIM",
-          "label": "Plex Claim",
-          "default": "claim-xxxxx"
-        }
-      ],
-      "volumes": [
-        {
-          "name": "plex-config",
-          "label": "Config Volume",
-          "host": "/usr/local/.containers/volumes/plex/config",
-          "container": "/config"
-        },
-        {
-          "name": "plex-transcode",
-          "label": "Transcode Volume",
-          "host": "/usr/local/.containers/volumes/plex/transcode",
-          "container": "/transcode"
-        },
-        {
-          "name": "plex-data",
-          "label": "Data Volume",
-          "host": "/usr/local/.containers/volumes/plex/data",
-          "container": "/data"
-        }
-      ],
-      "ports": [
-        "32400:32400/tcp",
-        "3005:3005/tcp",
-        "8324:8324/tcp",
-        "32469:32469/tcp",
-        "1900:1900/udp",
-        "32410:32410/udp",
-        "32412:32412/udp",
-        "32413:32413/udp",
-        "32414:32414/udp"
-      ]
-    },
-    {
-      "id": 5,
-      "type": 1,
-      "title": "MSSQL",
-      "description": "Microsoft SQL Server",
-      "categories": [
-        "Database"
-      ],
-      "platform": "linux",
-      "logo": "https://www.gravatar.com/avatar/7d3b0469b6f73dd41ed7de7931e44510?s=120&r=g&d=404",
-      "image": "mcr.microsoft.com/azure-sql-edge",
-      "env": [
-        {
-          "name": "ACCEPT_EULA",
-          "label": "Accept EULA",
-          "default": "Y"
-        },
-        {
-          "name": "MSSQL_SA_PASSWORD",
-          "label": "SA Password",
-          "default": "Kb971033!"
-        },
-        {
-          "name": "MSSQL_PID",
-          "label": "Product ID",
-          "default": "Developer"
-        }
-      ],
-      "volumes": [
-        {
-          "name": "mssql-data",
-          "label": "Data Volume",
-          "host": "/usr/local/.containers/volumes/mssql/data",
-          "container": "/var/opt/mssql/data"
-        },
-        {
-          "name": "mssql-log",
-          "label": "Log Volume",
-          "host": "/usr/local/.containers/volumes/mssql/log",
-          "container": "/var/opt/mssql/log"
-        },
-        {
-          "name": "mssql-secrets",
-          "label": "Secrets Volume",
-          "host": "/usr/local/.containers/volumes/mssql/secrets",
-          "container": "/var/opt/mssql/secrets"
-        }
-      ],
-      "ports": [
-        "1433:1433/tcp"
-      ],
-      "restart": "unless-stopped",
-      "privileged": true
-    },
-    {
-      "id": 6,
-      "type": 1,
-      "title": "Azurite",
-      "description": "Azure Storage Emulator",
-      "categories": [
-        "Storage"
-      ],
-      "platform": "linux",
-      "logo": "https://www.gravatar.com/avatar/7d3b0469b6f73dd41ed7de7931e44510?s=120&r=g&d=404",
-      "image": "mcr.microsoft.com/azure-storage/azurite",
-      "command": "azurite --loose --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --tableHost 0.0.0.0 --tablePort 10002 --location /workspace --debug /workspace/debug.log",
-      "volumes": [
-        {
-          "name": "azurite-workspace",
-          "label": "Workspace Volume",
-          "host": "/usr/local/.containers/volumes/azurite/workspace",
-          "container": "/workspace"
-        }
-      ],
-      "ports": [
-        "10000:10000/tcp",
-        "10001:10001/tcp",
-        "10002:10002/tcp"
-      ],
-      "restart": "unless-stopped",
-      "privileged": true
-    },
-    {
-      "id": 7,
-      "type": 1,
-      "title": "LowKey",
-      "description": "LowKey Vault",
-      "categories": [
-        "Security"
-      ],
-      "platform": "linux",
-      "logo": "https://avatars.githubusercontent.com/u/308406?s=48&v=4",
-      "image": "nagyesta/lowkey-vault:2.5.81",
-      "volumes": [
-        {
-          "name": "lowkey-import",
-          "label": "Import Volume",
-          "host": "/usr/local/.containers/volumes/lowkey/import",
-          "container": "/import"
-        },
-        {
-          "name": "lowkey-config",
-          "label": "Config Volume",
-          "host": "/usr/local/.containers/volumes/lowkey/config",
-          "container": "/config"
-        }
-      ]
-    },
-    {
-      "id": 8,
-      "type": 3,
-      "title": "Management",
-      "description": "Base Management",
-      "categories": [
-        "Platform"
-      ],
-      "platform": "linux",
-      "repository": {
-        "url": "https://github.com/ennerperez/portainer-templates",
-        "stackfile": "stacks/management/docker-compose.yml"
-      }
-    },
-    {
-      "id": 9,
-      "type": 3,
-      "title": "Ghost",
-      "description": "Ghost Site",
-      "categories": [
-        "Blog"
-      ],
-      "platform": "linux",
-      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/ghost.png",
-      "repository": {
-        "url": "https://github.com/ennerperez/portainer-templates",
-        "stackfile": "stacks/ghost/docker-compose.yml"
-      },
-      "env": [
-        {
-          "name": "DB_PASSWORD",
-          "label": "Database Password"
-        },
-        {
-          "name": "SITE_NAME",
-          "label": "Site Name"
-        },
-        {
-          "name": "SITE_PORT",
-          "label": "Site Port"
-        },
-        {
-          "name": "SITE_ENV",
-          "label": "Site Environment",
-          "default": "production"
-        },
-        {
-          "name": "SITE_URL",
-          "label": "Site URL",
-        },
-        {
-          "name": "MAILGUN_USERNAME",
-          "label": "Mailgun Username",
-        },
-        {
-          "name": "MAILGUN_PASSWORD",
-          "label": "Mailgun Password",
-        },
-        {
-          "name": "MAILGUN_FROM",
-          "label": "Mailgun From",
-        }
-      ]
-    }
-  ]
+    ]
 }

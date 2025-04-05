@@ -1,7 +1,7 @@
 name: ghost
 services:
   ghost:
-    container_name: site
+    container_name: ${SITE_NAME}
     image: ghost:5-alpine
     restart: always
     ports:
@@ -41,7 +41,7 @@ services:
       - default
       - shared
   db:
-    container_name: database
+    container_name: ${SITE_NAME}_database
     image: mysql:8.0
     restart: always
     environment:
