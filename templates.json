@@ -292,6 +292,22 @@
           "name": "SITE_ENV",
           "label": "Site Environment",
           "default": "production"
+        },
+        {
+          "name": "SITE_URL",
+          "label": "Site URL",
+        },
+        {
+          "name": "MAILGUN_USERNAME",
+          "label": "Mailgun Username",
+        },
+        {
+          "name": "MAILGUN_PASSWORD",
+          "label": "Mailgun Password",
+        },
+        {
+          "name": "MAILGUN_FROM",
+          "label": "Mailgun From",
         }
       ]
     }

@@ -1,6 +1,7 @@
 name: ghost
 services:
   ghost:
+    container_name: ${SITE_NAME}
     image: ghost:5-alpine
     restart: always
     ports:
@@ -12,23 +13,45 @@ services:
       database__connection__user: root
       database__connection__password: ${DB_PASSWORD}
       database__connection__database: ghost_${SITE_NAME}
+      mail__transport: SMTP
+      mail__options__service: Mailgun
+      mail__options__host: smtp.mailgun.org
+      mail__options__port: 465
+      mail__options__secure: true
+      mail__options__auth__user: ${MAILGUN_USERNAME}
+      mail__options__auth__pass: ${MAILGUN_PASSWORD}
+      mail__from: ${MAILGUN_FROM}
+      imageOptimization__resize: true
       # this url value is just an example, and is likely wrong for your environment!
-      url: http://localhost:8080
+      url: ${SITE_URL}
       # contrary to the default mentioned in the linked documentation, this image defaults to NODE_ENV=production (so development mode needs to be explicitly specified if desired)
       NODE_ENV: ${SITE_ENV}
     volumes:
       - /usr/local/containers/volumes/sites/${SITE_NAME}/content:/var/lib/ghost/content
-      - /usr/local/containers/volumes/sites/${SITE_NAME}/config.${SITE_ENV}.json:/var/lib/ghost/config.${SITE_ENV}.json
+      #- /usr/local/containers/volumes/sites/${SITE_NAME}/config.${SITE_ENV}.json:/var/lib/ghost/config.${SITE_ENV}.json
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: "node -e 'require(\"http\").get({host: \"localhost\", port: 2368, path: \"/ghost/api/admin/site/\", headers: {\"X-Forwarded-Proto\": \"https\"}}, res => process.exit(res.statusCode === 200 ? 0 : 1)).on(\"error\", () => process.exit(1));'"
+      interval: 10s
+      timeout: 10s
+      retries: 10
     networks:
       - default
       - shared
   db:
+    container_name: ${SITE_NAME}_database
     image: mysql:8.0
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - /usr/local/containers/volumes/sites/${SITE_NAME}/database:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
     networks:
       - default
 networks:
