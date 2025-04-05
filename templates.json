@@ -268,9 +268,10 @@
       "title": "Ghost",
       "description": "Ghost Site",
       "categories": [
-        "Web"
+        "Blog"
       ],
       "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/ghost.png",
       "repository": {
         "url": "https://github.com/ennerperez/portainer-templates",
         "stackfile": "stacks/ghost/docker-compose.yml"
