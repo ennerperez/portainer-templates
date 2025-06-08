@@ -9,8 +9,8 @@ services:
       - HTTP_PORT=8080
       - HTTPS_PORT=8081
     ports:
-      - "8010:8080/tcp"
-      - "8011:8081/tcp"
+      - "2010:8080/tcp"
+      - "2011:8081/tcp"
     healthcheck:
       test: wget --no-verbose --tries=3 --spider http://127.0.0.1:8080 || exit 1
       start_period: 5s
@@ -28,7 +28,7 @@ services:
       - HTTPS=false
       - USER_ACCOUNT=${ACCOUNT}
     ports:
-      - "8020:8081/tcp"
+      - "2020:8081/tcp"
     healthcheck:
       test: wget --no-verbose --tries=3 --spider http://127.0.0.1:8081 || exit 1
       start_period: 5s
@@ -48,7 +48,7 @@ services:
       - USER_ACCOUNT=${ACCOUNT}
       - CHECK_FREQUENCY=240
     ports:
-      - "8030:8080/tcp"
+      - "2030:8080/tcp"
     healthcheck:
       test: wget --no-verbose --tries=3 --spider http://127.0.0.1:8080 || exit 1
       start_period: 5s
