@@ -311,6 +311,21 @@
               "label": "Mailgun From"
             }
           ]
+        },
+        {
+          "id": 10,
+          "type": 3,
+          "title": "SRCDS",
+          "description": "HL2MP Server",
+          "categories": [
+            "Gaming"
+          ],
+          "platform": "linux",
+          "logo": "https://dn720201.ca.archive.org/0/items/srceng-debug/half-life-2-1-logo-png-transparent.png",
+          "repository": {
+            "url": "https://github.com/ennerperez/portainer-templates",
+            "stackfile": "stacks/hl2mp/docker-compose.yml"
+          }
         }
     ]
 }

@@ -1,0 +1,35 @@
+name: hl2mp
+services:
+  server:
+    container_name: hl2mp
+    image: sourceservers/hl2mp
+    volumes:
+      - /usr/local/containers/volumes/srcds/hl2mp:/data
+    restart: unless-stopped
+    ports:
+      - "27015:27015/tcp"
+      - "27020:27020/udp"
+      - "27005:27005/udp"
+      - "26900:26900/udp"
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 10G
+    networks:
+      - default
+      - shared
+  playit:
+    container_name: playit
+    image: ghcr.io/mafen/playit-docker:latest
+    restart: unless-stopped
+    depends_on:
+      - server
+    volumes:
+      - /usr/local/containers/volumes/srcds/hl2mp/playit.toml:/etc/playit/playit.toml
+    networks:
+      - default
+      - shared
+networks:
+  shared:
+    external: true
