@@ -6,7 +6,7 @@ services:
     command: -game hl2mp -console -secure -ip 0.0.0.0 +port 27015 +maxplayers 8 +map dm_overwatch
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      #- /usr/local/containers/volumes/srcds/hl2mp:/home/steam/gameserver
+      - /usr/local/containers/volumes/srcds/hl2mp:/home/steam/gameserver
     environment:
       - APPID=232370
       - APPNAME=hl2mp
