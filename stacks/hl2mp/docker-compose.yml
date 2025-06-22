@@ -2,12 +2,20 @@ name: hl2mp
 services:
   server:
     container_name: hl2mp
-    image: sourceservers/hl2mp
+    image: k4rian/srcds:latest
+    command: -game hl2mp -console -secure -ip 0.0.0.0 +port 27015 +maxplayers 8 +map dm_overwatch
     volumes:
-      - /usr/local/containers/volumes/srcds/hl2mp:/data
+      - /etc/localtime:/etc/localtime:ro
+      #- /usr/local/containers/volumes/srcds/hl2mp:/home/steam/gameserver
+    environment:
+      - APPID=232370
+      - APPNAME=hl2mp
+      - STEAMACC_USERNAME=anonymous
+      #- STEAMACC_PASSWORD=
     restart: unless-stopped
     ports:
       - "27015:27015/tcp"
+      - "27015:27015/udp"
       - "27020:27020/udp"
       - "27005:27005/udp"
       - "26900:26900/udp"
@@ -25,6 +33,8 @@ services:
     restart: unless-stopped
     depends_on:
       - server
+    environment:
+      - SECRET_KEY=2dd280465443e3f330d6a0eafca64ff200695c9efc429ab17ec6b71dacf6f1be
     volumes:
       - /usr/local/containers/volumes/srcds/hl2mp/playit.toml:/etc/playit/playit.toml
     networks:
