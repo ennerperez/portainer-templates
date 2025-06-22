@@ -2,23 +2,27 @@ name: hl2mp
 services:
   server:
     container_name: hl2mp
-    image: k4rian/srcds:latest
-    command: -game hl2mp -console -secure -ip 0.0.0.0 +port 27015 +maxplayers 8 +map dm_overwatch
+    image: alpaka/hl2mp:latest
+    build:
+      context: build
+      dockerfile: Dockerfile
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /usr/local/containers/volumes/srcds/hl2mp:/home/steam/gameserver
+      - /usr/local/containers/volumes/hl2mp/game:/home/steam/hl2mp-dedicated
     environment:
-      - APPID=232370
-      - APPNAME=hl2mp
-      - STEAMACC_USERNAME=anonymous
-      #- STEAMACC_PASSWORD=
+      - STEAMAPPID=232370
+      - STEAMAPP=hl2mp
+      - SRCDS_IP=0.0.0.0
+      - SRCDS_MAXPLAYERS=8
+      - SRCDS_STARTMAP=dm_lockdown
+      - SRCDS_PW=
+      - SRCDS_RCONPW=
+      - SRCDS_HOSTNAME="Alpaka HL2MP Server"
     restart: unless-stopped
     ports:
       - "27015:27015/tcp"
       - "27015:27015/udp"
       - "27020:27020/udp"
-      - "27005:27005/udp"
-      - "26900:26900/udp"
     deploy:
       resources:
         limits:
@@ -36,7 +40,7 @@ services:
     environment:
       - SECRET_KEY=2dd280465443e3f330d6a0eafca64ff200695c9efc429ab17ec6b71dacf6f1be
     volumes:
-      - /usr/local/containers/volumes/srcds/hl2mp/playit.toml:/etc/playit/playit.toml
+      - /usr/local/containers/volumes/hl2mp/playit.toml:/etc/playit/playit.toml
     networks:
       - default
       - shared
