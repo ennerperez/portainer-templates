@@ -326,6 +326,34 @@
             "url": "https://github.com/ennerperez/portainer-templates",
             "stackfile": "stacks/hl2mp/docker-compose.yml"
           }
+        },
+        {
+          "id": 11,
+          "type": 3,
+          "title": "SonarQube",
+          "description": "SonarQube",
+          "categories": [
+            "Platform"
+          ],
+          "platform": "linux",
+          "repository": {
+            "url": "https://github.com/ennerperez/portainer-templates",
+            "stackfile": "stacks/sonarqube/docker-compose.yml"
+          },
+          "env": [
+            {
+              "name": "DB_USERNAME",
+              "label": "Database User"
+            },
+            {
+              "name": "DB_PASSWORD",
+              "label": "Database User Password"
+            },
+            {
+              "name": "DB_NAME",
+              "label": "Database Name"
+            }
+          ]
         }
     ]
 }
