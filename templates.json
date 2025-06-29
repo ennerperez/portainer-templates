@@ -336,6 +336,7 @@
             "Platform"
           ],
           "platform": "linux",
+          "logo": "https://sonarsource.gallerycdn.vsassets.io/extensions/sonarsource/sonarqube/7.3.0/1745394795758/Microsoft.VisualStudio.Services.Icons.Default",
           "repository": {
             "url": "https://github.com/ennerperez/portainer-templates",
             "stackfile": "stacks/sonarqube/docker-compose.yml"
