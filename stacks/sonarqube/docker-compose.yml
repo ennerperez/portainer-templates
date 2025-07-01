@@ -10,9 +10,9 @@ services:
       SONAR_JDBC_USERNAME: ${DB_USERNAME}
       SONAR_JDBC_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - /usr/local/containers/volumes/services/sonarqube/data:/opt/SonarQube/data
-      - /usr/local/containers/volumes/services/sonarqube/extensions:/opt/SonarQube/extensions
-      - /usr/local/containers/volumes/services/sonarqube/logs:/opt/SonarQube/logs
+      - /usr/local/containers/volumes/sonarqube/data:/opt/SonarQube/data
+      - /usr/local/containers/volumes/sonarqube/extensions:/opt/SonarQube/extensions
+      - /usr/local/containers/volumes/sonarqube/logs:/opt/SonarQube/logs
     ports:
       - 9001:9000
     networks:
@@ -31,7 +31,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - /usr/local/containers/volumes/services/sonarqube/db:/var/lib/postgresql/data
+      - /usr/local/containers/volumes/sonarqube/db:/var/lib/postgresql/data
     networks:
       - default
       - shared
