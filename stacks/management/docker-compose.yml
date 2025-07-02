@@ -29,6 +29,18 @@ services:
       # Change './actual-data' below to the path to the folder you want Actual to store its data in on your server.
       # '/data' is the path Actual will look for its files in by default, so leave that as-is.
       - /usr/local/containers/volumes/management/budget/data:/data
+  keeweb:
+      container_name: keeweb
+      image: ghcr.io/keeweb/keeweb:latest
+      restart: unless-stopped
+      ports:
+      - "3020:80/tcp"
+      volumes:
+          - /usr/local/containers/volumes/management:/config
+      environment:
+          - TZ=America/Guayaquil
+          - PUID=1000
+          - PGID=1000
 networks:
   shared:
     external: true
