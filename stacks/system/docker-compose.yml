@@ -3,7 +3,7 @@ services:
   datadog:
     container_name: datadog
     image: datadog/agent:latest
-    restart: always
+    restart: unless-stopped
     privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -21,7 +21,7 @@ services:
   socat:
     container_name: socat
     image: alpine/socat:latest
-    restart: always
+    restart: unless-stopped
     command: "tcp-listen:2375,fork,reuseaddr,ignoreeof unix-connect:/var/run/docker.sock"
     privileged: true
     volumes:
@@ -42,7 +42,7 @@ services:
   proxy:
     container_name: proxy
     image: jc21/nginx-proxy-manager:latest
-    restart: always
+    restart: unless-stopped
     privileged: true
     ports:
       - "80:80/tcp"
@@ -68,7 +68,7 @@ services:
   cloudflared:
     container_name: cloudflared
     image: cloudflare/cloudflared:latest
-    restart: always
+    restart: unless-stopped
     privileged: true
     command: ["tunnel", "--no-autoupdate", "--metrics", "0.0.0.0:3333", "run", "--token", "${CF_TOKEN}"]
     #    healthcheck:

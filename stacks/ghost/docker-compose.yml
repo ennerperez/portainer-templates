@@ -3,7 +3,7 @@ services:
   ghost:
     container_name: ${SITE_NAME}
     image: ghost:5-alpine
-    restart: always
+    restart: unless-stopped
     ports:
       - "${SITE_PORT}:2368"
     environment:
@@ -43,7 +43,7 @@ services:
   db:
     container_name: ${SITE_NAME}_database
     image: mysql:8.0
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
