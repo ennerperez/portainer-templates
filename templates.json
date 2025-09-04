@@ -355,6 +355,66 @@
               "label": "Database Name"
             }
           ]
+        },
+        {
+          "id": 12,
+          "type": 3,
+          "title": "n8n",
+          "description": "n8n",
+          "categories": [
+            "Automation"
+          ],
+          "platform": "linux",
+          "logo": "https://pbs.twimg.com/profile_images/1536335358803251202/-gASF0c6_400x400.png",
+          "repository": {
+            "url": "https://github.com/ennerperez/portainer-templates",
+            "stackfile": "stacks/n8n/docker-compose.yml"
+          },
+          "env": [
+            {
+              "name": "N8N_BASIC_AUTH_USER",
+              "label": "Auth User",
+              "default": "admin"
+            },
+            {
+              "name": "N8N_BASIC_AUTH_PASSWORD",
+              "label": "Auth Password"
+            },
+            {
+              "name": "N8N_HOST",
+              "label": "Host",
+              "default": "localhost"
+            },
+            {
+              "name": "N8N_PROTOCOL",
+              "label": "Protocol",
+              "default": "http"
+            },
+            {
+              "name": "WEBHOOK_URL",
+              "label": "Webhook",
+              "default": "http://localhost:5678"
+            },
+            {
+              "name": "GENERIC_TIMEZONE",
+              "label": "Timezone",
+              "default": "UTC"
+            },
+            {
+              "name": "POSTGRES_USER",
+              "label": "Postgres User",
+              "default": "n8n"
+            },
+            {
+              "name": "POSTGRES_PASSWORD",
+              "label": "Postgres Password"
+            },
+            {
+              "name": "POSTGRES_DB",
+              "label": "Postgres Database",
+              "default": "n8n"
+            }
+          ]
         }
     ]
 }
