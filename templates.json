@@ -415,6 +415,28 @@
               "default": "n8n"
             }
           ]
+        },
+        {
+          "id": 13,
+          "type": 3,
+          "title": "Databases",
+          "description": "Databases",
+          "categories": [
+            "Databases"
+          ],
+          "platform": "linux",
+          "logo": "https://www.iconarchive.com/download/i103379/paomedia/small-n-flat/database.ico",
+          "repository": {
+            "url": "https://github.com/ennerperez/portainer-templates",
+            "stackfile": "stacks/databases/docker-compose.yml"
+          },
+          "env": [
+            {
+              "name": "PASSWORD",
+              "label": "Password",
+              "default": "Kb971033!"
+            }
+          ]
         }
     ]
 }

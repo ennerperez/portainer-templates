@@ -1,0 +1,63 @@
+name: databases
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: unless-stopped
+    ports:
+      - "5432:5432/tcp"
+    environment:
+      - POSTGRES_PASSWORD=${PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - /usr/local/containers/volumes/databases/postgres:/var/lib/postgresql
+    networks:
+      - default
+      - shared
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:latest
+    restart: unless-stopped
+    ports:
+      - "1433:1433/tcp"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${PASSWORD}
+    volumes:
+      - /usr/local/containers/volumes/databases/mssql:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P '${PASSWORD}' -N o -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    networks:
+      - default
+      - shared
+  mariadb:
+    container_name: mariadb
+    image: mariadb:latest
+    restart: unless-stopped
+    ports:
+      - "3306:3306/tcp"
+    environment:
+      - MARIADB_ROOT_PASSWORD=${PASSWORD}
+    volumes:
+      - /usr/local/containers/volumes/databases/mariadb:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin --user=root --password=${PASSWORD} --host=localhost ping"]
+      start_period: 60s
+      start_interval: 15s
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - default
+      - shared
+networks:
+  shared:
+    external: true
