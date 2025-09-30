@@ -46,8 +46,8 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - /usr/local/containers/volumes/system/proxy/data:/data
-      - /usr/local/containers/volumes/system/proxy/letsencrypt:/etc/letsencrypt
+      - /usr/local/containers/volumes/management/proxy/data:/data
+      - /usr/local/containers/volumes/management/proxy/letsencrypt:/etc/letsencrypt
     environment:
       - TZ=America/Guayaquil
       - PUID=1000
