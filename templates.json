@@ -10,6 +10,7 @@
                 "Platform"
             ],
             "platform": "linux",
+            "logo": "https://cdn-icons-png.flaticon.com/512/4795/4795506.png",
             "repository": {
                 "url": "https://github.com/ennerperez/portainer-templates",
                 "stackfile": "stacks/system/docker-compose.yml"
