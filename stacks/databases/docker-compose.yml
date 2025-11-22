@@ -2,10 +2,10 @@ name: databases
 services:
   postgres:
     container_name: postgres
-    image: postgres:latest
+    image: ${POSTGRES_IMAGE:-postgres:latest}
     restart: unless-stopped
     ports:
-      - "5432:5432/tcp"
+      - "${POSTGRES_PORT:-5432}:5432/tcp"
     environment:
       - POSTGRES_PASSWORD=${PASSWORD}
     healthcheck:
@@ -20,13 +20,14 @@ services:
       - shared
   mssql:
     container_name: mssql
-    image: mcr.microsoft.com/mssql/server:latest
+    image: ${MSSQL_IMAGE:-mcr.microsoft.com/mssql/server:latest}
     restart: unless-stopped
     ports:
-      - "1433:1433/tcp"
+      - "${MSSQL_PORT:-1433}:1433/tcp"
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=${PASSWORD}
+      - MSSQL_PRODUCT_ID=${MSSQL_PID:-Developer}
     volumes:
       - /usr/local/containers/volumes/databases/mssql:/var/opt/mssql
     healthcheck:
@@ -40,10 +41,10 @@ services:
       - shared
   mariadb:
     container_name: mariadb
-    image: mariadb:latest
+    image: ${MARIADB_IMAGE:-mariadb:latest}
     restart: unless-stopped
     ports:
-      - "3306:3306/tcp"
+      - "${MARIADB_PORT:-3306}:3306/tcp"
     environment:
       - MARIADB_ROOT_PASSWORD=${PASSWORD}
     volumes:
