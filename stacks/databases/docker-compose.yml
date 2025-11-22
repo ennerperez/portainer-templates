@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     ports:
       - "${POSTGRES_PORT:-5432}:5432/tcp"
+    privileged: true
     environment:
       - POSTGRES_PASSWORD=${PASSWORD}
     healthcheck:
@@ -24,6 +25,7 @@ services:
     restart: unless-stopped
     ports:
       - "${MSSQL_PORT:-1433}:1433/tcp"
+    privileged: true
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=${PASSWORD}
@@ -45,6 +47,7 @@ services:
     restart: unless-stopped
     ports:
       - "${MARIADB_PORT:-3306}:3306/tcp"
+    privileged: true
     environment:
       - MARIADB_ROOT_PASSWORD=${PASSWORD}
     volumes:
